@@ -4,6 +4,8 @@
 %global debug_package %{nil}
 %global import_path github.com/homeport/dyff
 
+# No special defines needed - we use a glob pattern in %files to handle optional docs
+
 Name:           dyff
 Version:        1.9.3
 Release:        1%{?dist}
@@ -68,6 +70,7 @@ go build -v \
 install -d %{buildroot}%{_bindir}
 install -d %{buildroot}%{_mandir}/man1
 install -d %{buildroot}%{_docdir}/%{name}
+install -d %{buildroot}%{_licensedir}/%{name}
 
 # Install binary
 install -p -m 0755 dyff %{buildroot}%{_bindir}/dyff
@@ -75,14 +78,12 @@ install -p -m 0755 dyff %{buildroot}%{_bindir}/dyff
 # Install documentation
 install -p -m 0644 README.md %{buildroot}%{_docdir}/%{name}/
 install -p -m 0644 LICENSE %{buildroot}%{_docdir}/%{name}/
+install -p -m 0644 LICENSE %{buildroot}%{_licensedir}/%{name}/
 
 # Install USER_GUIDE.md only if it exists (it's not in upstream repo)
 if [ -f USER_GUIDE.md ]; then
   install -p -m 0644 USER_GUIDE.md %{buildroot}%{_docdir}/%{name}/
 fi
-
-# Generate dynamic file list for optional documentation
-( cd %{buildroot} && find .%{_docdir}/%{name} -type f -name "*.md" ! -name "README.md" ) | sed 's|^\.||' > optional-docs.list
 
 # Generate man page (if available)
 # For now, we'll create a basic man page
@@ -191,13 +192,15 @@ EOF
 # Basic smoke test
 %{buildroot}%{_bindir}/dyff version
 
-%files -f optional-docs.list
-%license LICENSE
-%doc README.md
+%files
 %{_bindir}/dyff
 %{_mandir}/man1/dyff.1*
-# Note: /usr/share/doc/dyff/ directory and contents are handled by %doc and %license directives
-# Additional *.md files (like USER_GUIDE.md) are listed in optional-docs.list if present
+# License directory
+%dir %{_licensedir}/%{name}
+%{_licensedir}/%{name}/LICENSE
+# Documentation directory - glob pattern includes README.md, LICENSE, and USER_GUIDE.md (if present)
+%dir %{_docdir}/%{name}
+%{_docdir}/%{name}/*
 
 %changelog
 * Mon Oct 06 2025 Package Maintainer <maintainer@example.com> - 1.9.3-1
