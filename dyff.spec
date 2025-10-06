@@ -75,9 +75,14 @@ install -p -m 0755 dyff %{buildroot}%{_bindir}/dyff
 # Install documentation
 install -p -m 0644 README.md %{buildroot}%{_docdir}/%{name}/
 install -p -m 0644 LICENSE %{buildroot}%{_docdir}/%{name}/
-%if 0%{?fedora} || 0%{?rhel} >= 8
-install -p -m 0644 USER_GUIDE.md %{buildroot}%{_docdir}/%{name}/
-%endif
+
+# Install USER_GUIDE.md only if it exists (it's not in upstream repo)
+if [ -f USER_GUIDE.md ]; then
+  install -p -m 0644 USER_GUIDE.md %{buildroot}%{_docdir}/%{name}/
+fi
+
+# Generate dynamic file list for optional documentation
+( cd %{buildroot} && find .%{_docdir}/%{name} -type f -name "*.md" ! -name "README.md" ) | sed 's|^\.||' > optional-docs.list
 
 # Generate man page (if available)
 # For now, we'll create a basic man page
@@ -186,26 +191,22 @@ EOF
 # Basic smoke test
 %{buildroot}%{_bindir}/dyff version
 
-%files
+%files -f optional-docs.list
 %license LICENSE
 %doc README.md
 %{_bindir}/dyff
 %{_mandir}/man1/dyff.1*
-%dir %{_docdir}/%{name}
-%{_docdir}/%{name}/README.md
-%{_docdir}/%{name}/LICENSE
-%if 0%{?fedora} || 0%{?rhel} >= 8
-%{_docdir}/%{name}/USER_GUIDE.md
-%endif
+# Note: /usr/share/doc/dyff/ directory and contents are handled by %doc and %license directives
+# Additional *.md files (like USER_GUIDE.md) are listed in optional-docs.list if present
 
 %changelog
 * Mon Oct 06 2025 Package Maintainer <maintainer@example.com> - 1.9.3-1
 - Initial RPM package for Fedora
-- Added comprehensive USER_GUIDE.md
 - Build for x86_64 architecture
 - Static binary with no runtime dependencies
 - Include man page and documentation
 - MIT License
+- Make USER_GUIDE.md optional for COPR builds (not in upstream source)
 
 * Sun Oct 05 2025 Package Maintainer <maintainer@example.com> - 1.9.2-1
 - Version bump to 1.9.2

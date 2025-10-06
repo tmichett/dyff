@@ -63,9 +63,19 @@ This repository contains comprehensive documentation and packaging materials for
 
 **Who it's for**: RPM package builders and Fedora packagers.
 
+#### 6. [COPR_BUILD_GUIDE.md](COPR_BUILD_GUIDE.md)
+**COPR-specific build instructions**
+- Building in Fedora COPR
+- Handling upstream vs custom sources
+- COPR setup and configuration
+- Automated builds with CI/CD
+- Troubleshooting COPR issues
+
+**Who it's for**: Users building in Fedora COPR repositories.
+
 ### 🔧 Packaging Files
 
-#### 6. [dyff.spec](dyff.spec)
+#### 7. [dyff.spec](dyff.spec)
 **RPM specification file**
 - Package metadata
 - Build instructions
@@ -75,7 +85,7 @@ This repository contains comprehensive documentation and packaging materials for
 
 **Technical file**: Used by rpmbuild to create RPM packages.
 
-#### 7. [build-rpm.sh](build-rpm.sh)
+#### 8. [build-rpm.sh](build-rpm.sh)
 **Automated RPM build script**
 - Environment setup
 - Dependency installation
@@ -98,6 +108,7 @@ This repository contains comprehensive documentation and packaging materials for
 - **First time?** → [PACKAGING.md](PACKAGING.md) (Quick Start section)
 - **Need full instructions?** → [RPM_BUILD_INSTRUCTIONS.md](RPM_BUILD_INSTRUCTIONS.md)
 - **Just build it!** → Run `./build-rpm.sh`
+- **Building in COPR?** → [COPR_BUILD_GUIDE.md](COPR_BUILD_GUIDE.md)
 
 #### Distribute or Maintain
 - **Package overview?** → [PACKAGING.md](PACKAGING.md)
@@ -139,10 +150,11 @@ All Documentation:
 | USER_GUIDE.md | ~800 | ~42 KB | Complete manual |
 | PACKAGING.md | ~500 | ~18 KB | Packaging overview |
 | RPM_BUILD_INSTRUCTIONS.md | ~700 | ~30 KB | Build guide |
-| dyff.spec | ~200 | ~8 KB | RPM spec |
+| COPR_BUILD_GUIDE.md | ~600 | ~26 KB | COPR build guide |
+| dyff.spec | ~220 | ~9 KB | RPM spec |
 | build-rpm.sh | ~250 | ~9 KB | Build script |
 
-**Total Documentation**: ~2,500 lines, ~110 KB
+**Total Documentation**: ~3,100 lines, ~137 KB
 
 ## Quick Start by Role
 
