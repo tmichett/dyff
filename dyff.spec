@@ -51,6 +51,7 @@ Key features:
 %build
 # Set up Go environment
 export GODEBUG=netdns=go
+export GIT_IPV4=true
 export GOPATH=$(pwd)/.gopath
 export GO111MODULE=on
 export CGO_ENABLED=0
@@ -62,7 +63,7 @@ go build -v \
   -buildmode=pie \
   -mod=readonly \
   -modcacherw \
-  -ldflags="-s -w -X github.com/homeport/dyff/internal/cmd.version=%{version}" \
+  -ldflags="-s -w -X github.com/tmichett/dyff/internal/cmd.version=%{version}" \
   -o dyff \
   ./cmd/dyff
 
