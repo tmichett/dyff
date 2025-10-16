@@ -52,6 +52,7 @@ Key features:
 # Set up Go environment
 export GODEBUG=netdns=go
 export GIT_IPV4=true
+export GOPROXY=direct
 export GOPATH=$(pwd)/.gopath
 export GO111MODULE=on
 export CGO_ENABLED=0
