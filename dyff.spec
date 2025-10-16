@@ -50,6 +50,7 @@ Key features:
 
 %build
 # Set up Go environment
+export GODEBUG=netdns=go
 export GOPATH=$(pwd)/.gopath
 export GO111MODULE=on
 export CGO_ENABLED=0
